@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table,tr,td{border-collapse: collapse;border: 1px solid black}
+        </style>
+    </head>
+    <body>
+        <h1>The XMLHttpRequest Object</h1>
+
+        <div id="demo" style="font-size: 30px;font-weight: bold;">
+            <br>
+        </div>
+
+
+
+        <input type="text" onkeyup="m1(this.value)" placeholder="enter name"/>
+        <div id="sp1">Hi</div>
+        <script>
+            var xhr;
+            function m1(str) {
+                if (str.length === 0) {
+                    document.getElementById("sp1").innerHTML = "";
+                } else {
+                    xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            //document.getElementById("sp1").innerHTML = xhr.responseText + str;
+
+//                            const obj = JSON.parse('{\n\
+//                                                        "name":"John", \n\
+//                                                        "age":30, \n\
+//                                                        "city":"New York"\n\
+//                                                    }');
+
+                            var s = "";
+                            for (var i = 0, j = 0; i < xhr.responseText.length; i++) {
+                                if (xhr.responseText[i] == " ") {
+                                    //i++;  
+                                    continue;
+                                } else if (xhr.responseText[i] === "\n") {
+                                    //s+="";
+                                    //j++;
+                                } else {
+                                    s += xhr.responseText[i];
+                                    //j++;
+                                }
+
+
+                            }
+                            //var stringToArray=JSON.
+                            var items = JSON.parse(s);
+                            //console.log(items.users);
+                            var text = "";
+                             text+="<table>";
+                            for (var i = 0; i < items.users.length; i++) {
+
+                                console.log(items.users[i].name);
+////                            console.log(obj.id);
+////                            console.log(obj.email);
+                                text +="<tr><td>"+items.users[i].id+"</td>"+
+                                        "<td>"+items.users[i].name+"</td>"+
+                                        "<td>"+items.users[i].email+"</td></tr>";
+
+                           
+//                                        "<br/>" + "ID:" + items.users[i].id + "<br/>" +
+//                                        "Name:" + items.users[i].name + "<br/>" +
+//                                        "Email:" + items.users[i].email
+
+                            }
+                            text+="</table>";
+                            document.getElementById("sp1").innerHTML = text;
+
+
+                        }
+                    };
+                    xhr.open("GET", "usersArray.json", true);
+                    xhr.send();
+                }
+
+
+
+            }
+
+        </script>
+
+
+
+    </body>
+</html>

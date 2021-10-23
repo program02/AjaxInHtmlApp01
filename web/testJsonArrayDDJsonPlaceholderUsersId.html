@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table,tr,td{border-collapse: collapse;border: 1px solid black}
+            option{width: auto;height: 50px;background-color:  #CCFFCC;margin:   5px;}
+            option:hover{background-color:  #ffcc00;}
+        </style>
+    </head>
+    <body>
+        <h1>The XMLHttpRequest Object</h1>
+
+        <div id="demo" style="font-size: 30px;font-weight: bold;">
+            <br>
+        </div>
+
+        <input type="text" id="tf1" onkeyup="m1(this.value)" placeholder="Select name from DD"/><br></br>
+        <div id="sp1">Hi
+
+        </div>
+
+        <br></br>
+        <hr>
+
+        <script>
+            document.getElementById("tf1").value = "";
+
+            function ddtoTF(p) {
+                document.getElementById("tf1").value = p;
+            }
+            var xhr;
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var s = "";
+                    //removing extra space from jsonLikeString.
+                    for (var i = 0, j = 0; i < xhr.responseText.length; i++) {
+                        if (xhr.responseText[i] == " ") {
+                            //i++;  
+                            continue;
+                        } else if (xhr.responseText[i] === "\n") {
+                            //s+="";
+                            //j++;
+                        } else {
+                            s += xhr.responseText[i];
+                            //j++;
+                        }
+
+
+                    }
+                    //var stringToJSON.
+                    var items = JSON.parse(s);
+                    //console.log(items.users);
+                    var text = "";
+                    text += "<select id='namedd' onchange='ddtoTF(this.value)'>";
+                    for (var i = 0; i < items.length; i++) {
+
+                        console.log(items[i].id);
+////                            console.log(obj.id);
+////                            console.log(obj.email);
+
+                        text += "<option value=" + items[i].address.city + ">" + items[i].id + "   " + items[i].name + "</option>";
+
+
+
+//                                        "<br/>" + "ID:" + items.users[i].id + "<br/>" +
+//                                        "Name:" + items.users[i].name + "<br/>" +
+//                                        "Email:" + items.users[i].email
+
+                    }
+                    text += "</select>";
+                    document.getElementById("sp1").innerHTML = text;
+
+
+                }
+            };
+            //xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
+            xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+            xhr.send();
+
+
+
+
+
+
+        </script>
+
+
+
+        <input type="text" id="tf2" onkeyup="m2(this.value)" placeholder="enter UserID"/><br></br>
+        <div id="sp2">Hi
+
+        </div>
+        <hr>
+        <script>
+            var xhr2;
+            document.getElementById("tf2").value = "";
+            function m2(str) {
+                if (str.length === 0) {
+                    document.getElementById("sp2").innerHTML = "";
+                } else {
+                    xhr2 = new XMLHttpRequest();
+                    xhr2.onreadystatechange = function () {
+                        if (xhr2.readyState === 4 && xhr2.status === 200) {
+                            //document.getElementById("sp2").innerHTML = xhr.responseText + str;
+
+                            //                            const obj = JSON.parse('{\n\
+                            //                                                        "name":"John", \n\
+                            //                                                        "age":30, \n\
+                            //                                                        "city":"New York"\n\
+                            //                                                    }');
+
+                            var s = "";
+                            for (var i = 0, j = 0; i < xhr2.responseText.length; i++) {
+                                if (xhr2.responseText[i] == " ") {
+                                    //i++;  
+                                    continue;
+                                } else if (xhr2.responseText[i] === "\n") {
+                                    //s+="";
+                                    //j++;
+                                } else {
+                                    s += xhr2.responseText[i];
+                                    //j++;
+                                }
+
+
+                            }
+                            //var stringToArray=JSON.
+                            var items = JSON.parse(s);
+                            //console.log(items.users);
+                            var text = "";
+                            text += "<select id='namedd2'>";
+                            //for (var i = 0; i < items.length; i++) {
+
+                            console.log(items.id);
+                            ////                            console.log(obj.id);
+                            ////                            console.log(obj.email);
+
+                            text += "<option value=" + items.name + ">" + items.name + "</option>";
+
+
+
+                            //                                        "<br/>" + "ID:" + items.users[i].id + "<br/>" +
+                            //                                        "Name:" + items.users[i].name + "<br/>" +
+                            //                                        "Email:" + items.users[i].email
+
+                            //}
+                            text += "</select>";
+                            document.getElementById("sp2").innerHTML = text;
+
+
+                        }
+                    };
+                    //xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
+                    xhr2.open("GET", "https://jsonplaceholder.typicode.com/users/" + str, true);
+                    xhr2.send();
+                }
+
+
+
+            }
+
+        </script>
+
+
+
+
+
+
+
+    </body>
+</html>
